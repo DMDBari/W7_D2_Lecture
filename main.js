@@ -269,9 +269,9 @@ console.log(billie);
 
 let rainbow = ['red', 'orange', 'yellow','green', 'blue', 'indigo', 'violet']
 
-let [r, o, y] = rainbow;
+let [r, o, y1] = rainbow;
 
-console.log(r, o, y);
+console.log(r, o, y1);
 
 let finalFour = ['UConn', 'Purdue', 'Alabama', 'NC State'];
 
@@ -360,11 +360,364 @@ favs.unshift('Mokh Mchermel');
 console.log(favs)
 
 console.log(favs.slice(1, 4))
+console.clear()
+
+
+// -------------------------------------------------------------
+
+// Functions
+
+// Regular Functions
+
+/*
+Syntax:
+
+functions funcName(param1, param2, etc.){
+    code to run when executed
+}
+*/
+
+function addNums(){
+    let num1 = 10
+    let num2 = 20
+    return num1 + num2
+};
+
+console.log(addNums);
+console.log(typeof addNums);
+
+// to execute - funName() or funcName(arg1, arg2, etc.)
+console.log(addNums());
+
+
+// Using Parameters
+function addNumsAgain(num1, num2){
+    return num1 + num2
+};
+
+console.log(addNumsAgain);
+
+console.log(addNumsAgain(16, 28));
+
+console.log(addNumsAgain(15));
+
+
+function logArgs(a, b){
+    console.log('A is:', a, typeof a);
+    console.log('B is:', b, typeof b);
+};
+
+
+logArgs(22); // will not throw error for missing arg - will be undefined instead
+
+logArgs(b=13, a='hello') // keyword arguments are not a thing in JS
 
 
 
+/*
+Create a JS Function that takes a first name and last name and returns a String that says Hello first name last name. The input would be something like:
+"Bo", "Jackson"
+and the output would be:
+"Hello Bo Jackson"
+*/
+
+function greeting(a, b){
+    return console.log(`Hello ${a} ${b}`);
+};
+
+greeting('Bo', 'Jackson');
 
 
+// Arrow Functions
+
+// The most basic arrow function
+
+let doNothing = () => {};
+console.log(doNothing);
+console.log(typeof doNothing);
+
+
+/*
+Syntax
+const funcName = (param1, param2, etc) => {
+    //dostuf
+    return value
+}
+
+
+* if only one parameter, the parenthese are optional const funcName = param1 => {
+    // do stuff
+    return value
+}
+
+
+* if you rfunction is one line returning a value, you can use the implicit return
+const funName = (param1, param2, etc) => returnValue
+
+*/
+
+
+const addNums2 = (num1, num2) => {
+    num1 += 10;
+    num2 += 10;
+    return num1 + num2
+};
+
+console.log(addNums2);
+console.log(typeof addNums2);
+
+console.log(addNums2(4, 8));
+
+// with one param
+const squareNum = num => {
+    return num ** 2
+};
+
+console.log(squareNum);
+console.log(typeof squareNum);
+
+console.log(squareNum(10));
+console.log(squareNum(4));
+
+
+// Implicit Return
+const squareNum2 = num => num ** 2;
+
+console.log(squareNum2);
+console.log(typeof squareNum2);
+
+console.log(squareNum2(10));
+console.log(squareNum2(4));
+
+
+// The Spread Operator ...
+
+// .. As a rest operator
+let [x, y, ...z] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+console.log(x);
+console.log(y);
+console.log(z);
+
+
+function useSpread(x, y, z) {
+    console.log('x:', x);
+    console.log('y:', y);
+    console.log('z:', z);
+    return x * y + z
+};
+
+let myNumArr = [11, 2, 7];
+
+// traditionally we can call our function like this:
+let myNewNum = useSpread(11, 2, 7);
+console.log(myNewNum);
+
+// Or like this
+let myNewNum2 = useSpread(myNumArr[0], myNumArr[1], myNumArr[2]);
+console.log(myNewNum2);
+
+
+// using the spread operator
+let myNewNum3 = useSpread(...myNumArr);
+console.log(myNewNum3);
+
+
+// We can also use the spread operator when making copies of the array
+
+let myNumArr2 = [...myNumArr];
+console.log(myNumArr2)
+
+let myNumArr3 = ['hello', ...myNumArr, 'goodbye'];
+console.log(myNumArr3);
+
+// ------------------------------------------------------------------
+
+// Array Methods with callback functions!
+
+// Array.forEach(callbackFn)  -? callbackFn(element, index, arr)
+
+let baseballTeams = ['White Sox', 'Red Sox', 'Tigers', 'Cardinals', 'Mets', 'Dodgers', 'Giants'];
+
+function myCallBack(element, index, arr){
+    console.log('Element:', element);
+    console.log('Index:', index);
+    console.log('Array:', arr);
+};
+
+baseballTeams.forEach(myCallBack);
+
+baseballTeams.forEach( e=> console.log(`I like to watch the ${e} play baseball`));
+
+baseballTeams.forEach( (e,i) => console.log(`${e} is at index ${i}`))
+
+// Array.map(callbackFn) -- callbackFn (elemtn, index, arr)
+// return a new array with the return values of callbackFn on each element
+
+let teamLengths = baseballTeams.map( team => team.length );
+console.log(teamLengths);
+
+let teamIndex = baseballTeams.map( (el, idx) => el + idx );
+console.log(teamIndex);
+
+// Array.filter(callbackFn) - callbackFn(element, index, arr)
+// return a new array withh the elements that return a truthy value when callbackFn is executed on it
+
+function isMultiWords(teamName){
+    let teamWords = teamName.split(' ')
+    return teamWords.length >= 2
+};
+
+let multiMap = baseballTeams.map(isMultiWords);
+console.log(multiMap);
+
+let multiFilter = baseballTeams.filter(isMultiWords);
+console.log(multiFilter);
+
+
+// Array.reduce(callbackFn) - callbackFn(accumulator, currentValue)
+
+let numbers = [2, 4, 7, 9, 6, 1, 5];
+
+function reduceCallback(acc, current){
+    console.log('Accumulator', acc);
+    console.log('Current Value', current);
+    console.log('Returns', acc + current);
+    console.log('--------------')
+    return acc + current
+};
+
+let total = numbers.reduce(reduceCallback);
+console.log(total);
+
+
+// Flow Control
+
+// Review ifs
+
+let myAge = 55;
+
+let eligibility;
+if (myAge > 35){
+    eligibility = true;
+} else {
+    eligibility = false;
+};
+
+console.log(eligibility);
+
+// Ternary Operator
+// boolean or condition ? actionIfTrue : actionIfFalse
+let val1 = 20;
+let val2 = 15
+
+let val3 = (val1 > val2) ? 'Hello' : 'Goodbye';
+console.log(val3);
+
+
+let birthYear = 1985;
+
+let myGeneration;
+if (birthYear >= 1946 && birthYear <= 1964){
+    myGeneration = 'Boomer'
+} else if (birthYear <= 1979){
+    myGeneration = 'GenX'
+} else if (birthYear <= 1995){
+    myGeneration = 'Millenial'
+} else {
+    myGeneration = 'Zoomer'
+};
+
+console.log(myGeneration);
+
+let myGeneration2 = (birthYear <= 1964) ? 'Boomer' : (birthYear <= 1979) ? 'GenX' : (birthYear <= 1995) ? 'Millenial': 'Zoomer';
+console.log(myGeneration2);
+
+
+// Traditions For Loop
+// for (varName=startingValue; stopCondition; varName increment/decrement)
+
+// Simple Example
+for (let i=0; i < 5; i++){
+    console.log(i);
+};
+
+console.log('--------------')
+
+for (let j=10; j <= 100; j+=5){
+    console.log(j);
+};
+
+console.log('-----------------')
+
+for (let k=10; k>0; k--){
+    console.log(k);
+};
+
+// use traditional for loop to loop over an array
+// start = 0 to represent index
+// stopCondition < arr.length
+// increment by 1
+
+console.log(baseballTeams);
+
+for (idx=0; idx< baseballTeams.length; idx++){
+    console.log(idx, baseballTeams[idx])
+};
+
+
+// For...of Loop -- ES6
+// Loop over an iterable giving each iterable item
+// Syntax: for (let element of iterable){ do something for each }
+
+for (let team of baseballTeams){
+    console.log(team);
+};
+
+// -- works with strings
+let firstPresident = 'George Washington';
+
+for (let chr of firstPresident){
+    console.log(chr);
+};
+
+
+// For...in loop
+// Will loop through the properties of an object
+// an aArray is a special type of object where the indices are properties
+
+for (let i in baseballTeams){
+    console.log(i);
+};
+
+let exObj = {firstName: 'Dillon', lastName: 'Dains', city: 'Columbia'};
+
+for (let key in exObj){
+    console.log(key);
+};
+
+// while loop
+// Syntax: while(condition){ code to run while condition is true}
+
+let randomNumber = Math.floor(Math.random() * 10);
+console.log('start', randomNumber);
+
+while (randomNumber != 5){
+    randomNumber = Math.floor(Math.random() * 10);
+    console.log(randomNumber);  
+};
+
+console.log('end', randomNumber)
+
+
+// do...while loop
+// Syntas: do { statement } while (condition);
+// The do is run AT LEAST one time
+
+let myNum = 12;
+do {
+    myNum += 10;
+    console.log(myNum)
+} while (myNum < 100);
 
 
 
